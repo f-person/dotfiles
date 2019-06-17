@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 mate-settings-daemon &
 mate-power-manager &
 clipmenud &
