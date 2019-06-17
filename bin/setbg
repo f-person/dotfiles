@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ ! -z "$1" ] && cp "$1" ~/.config/wall.png && notify-send -i "$HOME/Downloads/wall.png" "Wallpaper changed."
+xwallpaper --zoom ~/Downloads/wall.png
