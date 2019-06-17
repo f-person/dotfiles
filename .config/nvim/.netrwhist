@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/fperson/go/src/Learn_to_program_in_go'
+let g:netrw_dirhist_2='/home/fperson/go/src/Learn_to_program_in_go/l2_slices'
+let g:netrw_dirhist_3='/home/fperson/projects/python_kivy_calculator'
+let g:netrw_dirhist_4='/home/fperson/projects/cities_descriptor_condition'
+let g:netrw_dirhist_5='/home/fperson/Downloads/sclack/sclack'
+let g:netrw_dirhist_6='/home/fperson/projects/double_no_lose'
+let g:netrw_dirhist_7='/home/fperson/projects/enverex.io_regger'
