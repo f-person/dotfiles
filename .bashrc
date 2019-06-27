@@ -142,7 +142,7 @@ shopt -s autocd
 
 alias ls='lsd'
 alias globalip='curl https://ipinfo.io/ip'
-alias diadon='python3 ~/.diadon/diadon.py'
+alias diadon='python3.6 ~/.diadon/diadon.py'
 alias clear='clear -x'
 alias vim='nvim'
 alias vi='vim'
@@ -155,3 +155,11 @@ export PATH="$PATH:/home/fperson/Android/Sdk/platform-tools"
 export PATH="$PATH:/home/fperson/Android/Sdk/build-tools"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export GOROOT=$HOME/go
+export GOPATH=$HOME/go/src
+export PATH=$PATH:$GOROOT/bin
+
+f() {
+    fff "$@"
+    cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+}
