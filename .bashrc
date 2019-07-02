@@ -134,7 +134,7 @@ if ! shopt -oq posix; then
 fi
 
 export PATH=/bin/lscript:/bin/lscript:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/home/fperson/local/bin
-export PATH=/bin/lscript:/bin/lscript:/bin/lscript:/bin/lscript:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/home/fperson/local/bin:/home/fperson/bin
+export PATH=/bin/lscript:/bin/lscript:/bin/lscript:/bin/lscript:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/home/fperson/local/bin:/home/fperson/bin:/usr/local/go/bin:/home/fperson/go/bin
 
 # ---------- my configs ----------
 
@@ -155,11 +155,11 @@ export PATH="$PATH:/home/fperson/Android/Sdk/platform-tools"
 export PATH="$PATH:/home/fperson/Android/Sdk/build-tools"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export GOROOT=$HOME/go
-export GOPATH=$HOME/go/src
-export PATH=$PATH:$GOROOT/bin
 
 f() {
     fff "$@"
     cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
+
+
+eval "$(thefuck --alias)"
