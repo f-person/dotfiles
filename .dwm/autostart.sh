@@ -4,11 +4,12 @@ mate-settings-daemon &
 mate-power-manager &
 clipmenud &
 compton &
+firejail pidgin &
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download
-bwm --interval 1000 --interface wlan0 --upload > /tmp/bandwidth-upload &
-bwm --interval 1000 --interface wlan0 --download > /tmp/bandwidth-download &
-setbg
+bwm --interval 500 --interface wlan0 --upload > /tmp/bandwidth-upload &
+bwm --interval 500 --interface wlan0 --download > /tmp/bandwidth-download &
+/home/fperson/bin/setbg &
 #xscreensaver &
 
 
