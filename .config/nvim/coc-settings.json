@@ -1,5 +1,5 @@
 {
-"languageserver": {
+  "languageserver": {
     "dart": {
       "command": "dart_language_server", // in windows is dart_language_server.bat
       "args": [],
@@ -11,6 +11,11 @@
           "completion": {}
         }
       }
+    },
+ "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
     }
   }
 }
