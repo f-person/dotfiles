@@ -32,6 +32,7 @@ static const Rule rules[] = {
 	{ "Pidgin",   NULL,       NULL,       1 << 8,       0,           -1 },
     {  NULL,      NULL, "nmtui-connect",       0,       1,           -1 },
     { "Lxtask",   NULL,       NULL,       0,            1,           -1 },
+    {  NULL,      NULL,       "stf",      0,            1,           -1 },
 };
 
 /* layout(s) */
