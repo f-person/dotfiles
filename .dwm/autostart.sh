@@ -4,7 +4,7 @@ mate-settings-daemon &
 mate-power-manager &
 clipmenud &
 compton &
-firejail pidgin &
+pidgin &
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download
 bwm --interval 500 --interface wlan0 --upload > /tmp/bandwidth-upload &
