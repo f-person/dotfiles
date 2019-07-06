@@ -142,7 +142,8 @@ shopt -s autocd
 
 alias ls='lsd'
 alias globalip='curl https://ipinfo.io/ip'
-alias diadon='python3.6 ~/.diadon/diadon.py'
+alias diadon='python3.6 $HOME/.diadon/diadon.py'
+alias դիադոն='diadon'
 alias clear='clear -x'
 alias vim='nvim'
 alias vi='vim'
