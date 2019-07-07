@@ -2,6 +2,9 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+clear
+/home/fperson/bin/hackerascii
+
 EDITOR=nvim
 export TERM="st-256color"
 
