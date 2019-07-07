@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-static int borderpx = 2;
+static char *font = "mono:pixelsize=12:antialias=true:autohint=true";
+static int borderpx = 1;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -95,11 +95,11 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.7;
+float alpha = 0.8;
 
-/* Terminal colors (16 first used in escape sequence) */
+/* Terminal colors (16 first used in escape sequence) 
 static const char *colorname[] = {
-	/* 8 normal colors */
+     //8 normal colors 
 	"black",
 	"red3",
 	"green3",
@@ -109,7 +109,7 @@ static const char *colorname[] = {
 	"cyan3",
 	"gray90",
 
-	/* 8 bright colors */
+     //8 bright colors 
 	"gray50",
 	"red",
 	"green",
@@ -121,13 +121,35 @@ static const char *colorname[] = {
 
 	[255] = 0,
 
-	/* more colors can be added after 255 to use with DefaultXX */
+     //more colors can be added after 255 to use with DefaultXX 
 	"#cccccc",
 	"#555555",
 	"black",
 };
+*/
 
-
+static const char *colorname[] = {
+	"#073642",  /*  0: black    */
+	"#dc322f",  /*  1: red      */
+	"#859900",  /*  2: green    */
+	"#b58900",  /*  3: yellow   */
+	"#268bd2",  /*  4: blue     */
+	"#d33682",  /*  5: magenta  */
+	"#2aa198",  /*  6: cyan     */
+	"#eee8d5",  /*  7: white    */
+	"#002b36",  /*  8: brblack  */
+	"#cb4b16",  /*  9: brred    */
+	"#586e75",  /* 10: brgreen  */
+	"#657b83",  /* 11: bryellow */
+	"#839496",  /* 12: brblue   */
+	"#6c71c4",  /* 13: brmagenta*/
+	"#93a1a1",  /* 14: brcyan   */
+	"#fdf6e3",  /* 15: brwhite  */
+	/* more colors can be added after 255 to use with DefaultXX */
+	"black",   /* 256 -> bg */
+	"#00cc00", /* 257 -> fg */
+    "magenta"  /* 258 -> cursor */
+};
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
