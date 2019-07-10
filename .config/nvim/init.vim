@@ -10,6 +10,7 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'junegunn/goyo.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 syntax on
@@ -19,7 +20,7 @@ color dracula
 set shell=bash
 syntax on
 set tabstop=4
-set expandtab
+"set expandtab
 set shiftwidth=4
 autocmd FileType dart set shiftwidth=2
 filetype on
@@ -44,6 +45,8 @@ nnoremap <leader>fR :FlutterHotRestart<cr>
 
 map <leader>f<leader> :Goyo \| set linebreak<CR>
 
+"exit terminal mode
+tnoremap <Esc> <C-\><C-n> 
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -61,4 +64,4 @@ autocmd FileType dart au BufWrite * :Autoformat
 autocmd FileType dart au FocusLost * :Autoformat
 
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
-autocmd FileType dart    map <leader>b<leader> :w !dart    %:p <CR>
+autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
