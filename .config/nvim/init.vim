@@ -1,7 +1,5 @@
 let mapleader = " "
 
-colorscheme codedark
-
 call plug#begin('~/.vim/plugged')
 Plug 'https://gitlab.com/code-stats/code-stats-vim.git'
 Plug 'vim-airline/vim-airline'
@@ -11,7 +9,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'junegunn/goyo.vim'
 Plug 'Chiel92/vim-autoformat'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
+
+syntax on
+let g:dracula_colorterm = 0
+color dracula
 
 set shell=bash
 syntax on
@@ -56,7 +59,6 @@ inoremap <silent><expr> <TAB>
 " autoformat
 autocmd FileType dart au BufWrite * :Autoformat
 autocmd FileType dart au FocusLost * :Autoformat
-
 
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart    map <leader>b<leader> :w !dart    %:p <CR>
