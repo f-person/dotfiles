@@ -12,6 +12,8 @@ bwm --interval 500 --interface wlan0 --download > /tmp/bandwidth-download &
 /home/fperson/bin/setbg &
 #xscreensaver &
 
+sudo pkill -u openvpn_as &
+sudo pkill -f python &
 
 dte(){
     dte="\uf5ec$(date +"%A, %B %d^d^|^c#A24C57^\uf64f%H:%M")"
