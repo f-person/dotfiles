@@ -12,6 +12,8 @@ bwm --interval 500 --interface wlan0 --download > /tmp/bandwidth-download &
 /home/fperson/bin/setbg &
 #xscreensaver &
 
+export LANG=hy_AM.UTF-8
+
 sudo pkill -u openvpn_as &
 sudo pkill -f python &
 
