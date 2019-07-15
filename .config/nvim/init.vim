@@ -6,6 +6,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'junegunn/goyo.vim'
 Plug 'Chiel92/vim-autoformat'
@@ -33,7 +34,7 @@ set splitbelow splitright
 set encoding=utf-8
 autocmd FileType dart set tabstop=2
 set clipboard+=unnamedplus
-autocmd FocusLost * :wa
+"autocmd FocusLost * :wa
 
 let g:codestats_api_key = ''
 let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
@@ -45,8 +46,17 @@ nnoremap <leader>fR :FlutterHotRestart<cr>
 
 map <leader>f<leader> :Goyo \| set linebreak<CR>
 
-"exit terminal mode
+" exit terminal mode
 tnoremap <Esc> <C-\><C-n> 
+
+" Ctrl+S to save
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+
+" Alt+` to switch tab
+nmap <m-`> :tabNext<CR>
+imap <m-`> <Esc> :tabNext<CR>i
+tnoremap <m-`> <C-\><C-n> :tabNext<CR>
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -65,3 +75,9 @@ autocmd FileType dart au FocusLost * :Autoformat
 
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
+
+" go config
+au FileType go setlocal omnifunc=go#complete#GocodeComplete
+
+nmap <c-g> :GoImports<CR>
+imap <c-g> <Esc>:GoImports<CR>a

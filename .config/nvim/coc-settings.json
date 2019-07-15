@@ -12,10 +12,19 @@
         }
       }
     },
- "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"]
+  "golang": {
+      "command": "go-langserver",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "gocodeCompletionEnabled": true,
+        "diagnosticsEnabled": true,
+        "lintTool": "golint"
+      }
     }
+//"golang": {
+//    "command": "gopls",
+//    "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+//    "filetypes": ["go"]
+//  }
   }
 }
