@@ -81,3 +81,24 @@ au FileType go setlocal omnifunc=go#complete#GocodeComplete
 
 nmap <c-g> :GoImports<CR>
 imap <c-g> <Esc>:GoImports<CR>a
+
+let g:go_code_completion_enabled = 0
+let g:go_highlight_extra_types = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+
+
+
+let g:jedi#completions_enabled = 0
+
+if ! has('gui_running')
+    set ttimeoutlen=10
+    augroup FastEscape
+        autocmd!
+        au InsertEnter * set timeoutlen=0
+        au InsertLeave * set timeoutlen=1000
+    augroup END
+endif
