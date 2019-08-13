@@ -7,6 +7,7 @@ alias diadon='python3.6 $HOME/.diadon/diadon.py'
 alias դիադոն='diadon'
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias vim=nvim
+alias please=sudo
 
 export PATH="$PATH:/usr/lib/dart/bin"
 export PATH="$PATH:/home/fperson/flutter/bin"
