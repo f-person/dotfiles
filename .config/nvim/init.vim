@@ -21,7 +21,6 @@ color dracula
 set shell=bash
 syntax on
 set tabstop=4
-"set expandtab
 set shiftwidth=4
 autocmd FileType dart set shiftwidth=2
 filetype on
@@ -34,8 +33,8 @@ set splitbelow splitright
 set encoding=utf-8
 autocmd FileType dart set tabstop=2
 set clipboard+=unnamedplus
-"autocmd FocusLost * :wa
 
+" codestats config
 let g:codestats_api_key = ''
 let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
 
@@ -58,6 +57,17 @@ nmap <m-`> :tabNext<CR>
 imap <m-`> <Esc> :tabNext<CR>i
 tnoremap <m-`> <C-\><C-n> :tabNext<CR>
 
+" coc.nvim config
+" if hidden is not set, TextEdit might fail.
+set hidden
+" Better display for messages
+set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -77,8 +87,6 @@ autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
 
 " go config
-au FileType go setlocal omnifunc=go#complete#GocodeComplete
-
 nmap <c-g> :GoImports<CR>
 imap <c-g> <Esc>:GoImports<CR>a
 
@@ -89,9 +97,6 @@ let g:go_highlight_function_parameters = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
-
-
-
 let g:jedi#completions_enabled = 0
 
 if ! has('gui_running')
