@@ -2,10 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export LANG=hy_AM.UTF-8
-
-clear
-/home/fperson/bin/hackerascii
+/home/fperson/bin/illumina
 
 EDITOR=nvim
 export TERM="st-256color"
