@@ -1,3 +1,3 @@
 #!/bin/sh
 
-import "$HOME/Pictures/Screenshots/screenshot_at_$(date +"%F_%T").png"
+maim -s "$HOME/Pictures/Screenshots/(date +%F-%T).png"
