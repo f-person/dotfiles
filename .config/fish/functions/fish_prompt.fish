@@ -1,0 +1,1 @@
+/home/fperson/.local/share/omf/themes/default_modified/fish_prompt.fish
