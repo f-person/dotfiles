@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/zsh
  
 mate-settings-daemon &
 mate-power-manager &
