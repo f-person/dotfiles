@@ -35,6 +35,7 @@ static const Rule rules[] = {
     {  NULL,      NULL, "nmtui-connect",  0,            1,           -1 },
     { "Lxtask",   NULL,       NULL,       0,            1,           -1 },
     {  NULL,      NULL,       "stf",      0,            1,           -1 },
+	{ "Tilda",    NULL,       NULL,       0,            1,           -1 },
     {  NULL,    NULL,"Picture in picture",0,            1,           -1 },
 };
 
