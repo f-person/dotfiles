@@ -2,15 +2,15 @@
  
 mate-settings-daemon &
 mate-power-manager &
-clipmenud &
+/home/fperson/bin/greenclip daemon &
 compton &
 pidgin &
+tilda &
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download
 bwm --interval 500 --interface wlan0 --upload > /tmp/bandwidth-upload &
 bwm --interval 500 --interface wlan0 --download > /tmp/bandwidth-download &
 /home/fperson/bin/setbg &
-#xscreensaver &
 
 export LANG=hy_AM.UTF-8
 
@@ -23,7 +23,6 @@ dte(){
 }
 
 mem(){
-    #mem=`free | awk '/Mem/ {printf "%d MiB/%d MiB\n", $3 / 1024.0, $2 / 1024.0 }'`
     mem=`free | awk '/Mem/ {printf "%d/%d MiB\n", $3 / 1024.0, $2 / 1024.0 }'`
     echo -e "\uf85a$mem"
 }
@@ -37,11 +36,6 @@ cpu(){
     cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
     echo -e "\uf821$cpu% cpu"
 }
-
-#ssid(){
-#ssid=`iwconfig 2>/dev/null | grep --extended-regexp --only-matching 'ESSID:*.*"' | sed --expression 's/ESSID://' --expression 's/"//g'`
-#echo -e "\ufaa8$ssid"
-#}
 
 band(){
     down=`sed -n '$p' /tmp/bandwidth-download | sed -e 's/^[ \t]*//'`
@@ -60,9 +54,10 @@ bat(){
 }
 
 wifi(){
-    ssid=`nmcli dev wifi list | awk '/\*/{if (NR!=1) {print $2}}'`
-    strength=`nmcli dev wifi list | awk '/\*/{if (NR!=1) {print $7}}'`
-    if [ -z "$ssid" ]
+	ssid=`iwgetid -r`
+	strength=`nmcli -t -f SSID,SIGNAL device wifi | grep $ssid: | cut -f2- -d:`
+
+	if [ -z "$ssid" ]
     then
         echo -e "\ufaa9"
     else
@@ -70,11 +65,8 @@ wifi(){
     fi
 }
 
-#colors - #B11F38 #E77A3D #EBD524 #4AA77A #685B87 #A24C57
-
+#colors: #B11F38 #E77A3D #EBD524 #4AA77A #685B87 #A24C57
 while true; do
-    #xsetroot -name "$(cpu) | $(mem) | $(ssid) | $(dte)"
-    #xsetroot -name "$(cpu)|$(mem)|$(ssid)|$(dte)"
     xsetroot -name "^c#B11F38^$(bat)^d^|^c#E77A3D^$(cpu)^d^|^c#EBD524^$(mem)^d^|^c#4AA77A^$(wifi)^d^|^c#685B87^$(band)^d^|^c#A24C57^$(dte)"
     sleep 1s
 done &
