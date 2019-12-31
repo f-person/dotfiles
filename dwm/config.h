@@ -19,7 +19,7 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
-static int isFullscreenFake = 1;
+static int isFullscreenFake = 0;
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -48,11 +48,11 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "(@)",      spiral },  /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "[]=",      tile },
 	{ "HHH",      grid },
-	{ "(@)",      spiral },
 	{ "[\\]",     dwindle },
 };
 
@@ -115,8 +115,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
-	{ MODKEY|ControlMask,           XK_k,      pushup,         {0} },
+	{ ShiftMask|ControlMask,        XK_j,      pushdown,       {0} },
+	{ ShiftMask|ControlMask,        XK_k,      pushup,         {0} },
 };
 
 /* button definitions */
