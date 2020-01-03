@@ -7,18 +7,25 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'junegunn/goyo.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'airblade/vim-gitgutter'
+Plug 'pangloss/vim-javascript'
+Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
+Plug 'ryanoasis/vim-devicons'
+Plug 'APZelos/blamer.nvim'
+Plug 'lervag/vimtex'
 call plug#end()
 
 syntax on
 let g:dracula_colorterm = 0
 color dracula
 
-set shell=bash
+set shell=fish
 syntax on
 set tabstop=4
 set shiftwidth=4
@@ -57,6 +64,12 @@ nmap <m-`> :tabNext<CR>
 imap <m-`> <Esc> :tabNext<CR>i
 tnoremap <m-`> <C-\><C-n> :tabNext<CR>
 
+" Ctrl + 2hjkl to navigate between splits
+nnoremap <C-h> <C-w>
+nnoremap <C-j> <C-w>
+nnoremap <C-k> <C-w>
+nnoremap <C-l> <C-w>
+
 " coc.nvim config
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -83,13 +96,16 @@ inoremap <silent><expr> <TAB>
 autocmd FileType dart au BufWrite * :Autoformat
 autocmd FileType dart au FocusLost * :Autoformat
 
+autocmd FileType javascript au BufWrite * :Autoformat
+autocmd FileType javascript au FocusLost * :Autoformat
+
+
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
 
 " go config
 nmap <c-g> :GoImports<CR>
 imap <c-g> <Esc>:GoImports<CR>a
-
 let g:go_code_completion_enabled = 0
 let g:go_highlight_extra_types = 1
 let g:go_highlight_functions = 1
@@ -98,6 +114,7 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:jedi#completions_enabled = 0
+let g:go_def_mode = 'godef'
 
 if ! has('gui_running')
     set ttimeoutlen=10
@@ -107,3 +124,12 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
+
+" icons
+let g:webdevicons_enable = 1
+let g:webdevicons_enable_nerdtree = 1
+
+" git config
+let g:blamer_enabled = 1
+let g:blamer_template = '<committer> • <committer-time> • <summary>'
+let g:blamer_date_format = '%A, %B %e, %Y %H:%M'
