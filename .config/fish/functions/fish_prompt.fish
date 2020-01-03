@@ -1,1 +1,1 @@
-/home/fperson/.local/share/omf/themes/default_modified/fish_prompt.fish
+/home/fperson/.local/share/omf/themes/fishbone/fish_prompt.fish
