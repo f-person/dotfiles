@@ -27,5 +27,6 @@
          }
        }
     }
-  }
+  },
+  "tsserver.npm": "/home/fperson/dev/node-v12.11.0-linux-x64/bin/npm"
 }
