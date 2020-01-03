@@ -1,5 +1,7 @@
 #!/usr/bin/zsh
  
+cd
+
 mate-settings-daemon &
 mate-power-manager &
 /home/fperson/bin/greenclip daemon &
