@@ -2,6 +2,8 @@ auto-reload yes
 
 bind-key j down
 bind-key k up
+bind-key d pagedown
+bind-key u pageup
 
 color listnormal cyan default
 color listfocus black yellow standout bold
@@ -11,4 +13,6 @@ color info red black bold
 color article cyan default
 
 browser "brave-browser"
-macro w set browser "w3m"; open-in-browser ; set browser linkhandler
+macro w set browser "w3m"; open-in-browser
+
+text-width 70
