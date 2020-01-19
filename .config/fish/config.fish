@@ -4,5 +4,11 @@ set -U fish_user_paths /bin/lscript /bin/lscript /bin/lscript /bin/lscript /usr/
 alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 abbr ls lsd
+abbr lst 'lsd --tree'
 abbr vim nvim
-abbr please sudo
+
+abbr gitst 'git status'
+abbr gitaa 'git add .'
+abbr gitc 'git commit -m'
+abbr gitpl 'git pull'
+abbr gitdf 'git diff'
