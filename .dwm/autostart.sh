@@ -1,23 +1,21 @@
-#!/usr/bin/zsh
+#!/usr/bin/bash
  
 cd
 
-mate-settings-daemon &
-mate-power-manager &
 /home/fperson/bin/greenclip daemon &
-compton &
 pidgin &
+slack &
 tilda &
+sxhkd &
+xfce4-power-manager &
+
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download
-bwm --interval 500 --interface wlan0 --upload > /tmp/bandwidth-upload &
-bwm --interval 500 --interface wlan0 --download > /tmp/bandwidth-download &
-/home/fperson/bin/setbg &
+bwm --interval 500 --interface wlp2s0 --upload > /tmp/bandwidth-upload &
+bwm --interval 500 --interface wlp2s0 --download > /tmp/bandwidth-download &
 
+setxkbmap "us, am(phonetic-alt)" -option "grp:win_space_toggle,grp_led:scroll"
 export LANG=hy_AM.UTF-8
-
-sudo pkill -u openvpn_as &
-sudo pkill -f python &
 
 dte(){
     dte="\uf5ec$(date +"%A, %B %d^d^|^c#A24C57^\uf64f%H:%M")"
@@ -46,8 +44,8 @@ band(){
 }
 
 bat(){
-    bat=`cat /sys/class/power_supply/BATT/capacity`
-    if [ "$(cat /sys/class/power_supply/BATT/status)" = "Charging" ]
+    bat=`cat /sys/class/power_supply/BAT0/capacity`
+    if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ]
     then
         echo -e "\uf584$bat%"
     else
@@ -68,7 +66,8 @@ wifi(){
 }
 
 #colors: #B11F38 #E77A3D #EBD524 #4AA77A #685B87 #A24C57
-while true; do
+while true
+do
     xsetroot -name "^c#B11F38^$(bat)^d^|^c#E77A3D^$(cpu)^d^|^c#EBD524^$(mem)^d^|^c#4AA77A^$(wifi)^d^|^c#685B87^$(band)^d^|^c#A24C57^$(dte)"
     sleep 1s
-done &
+done
