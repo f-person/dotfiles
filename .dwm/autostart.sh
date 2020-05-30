@@ -6,7 +6,7 @@ cd
 pidgin &
 slack &
 tilda &
-sxhkd &
+xbindkeys &
 xfce4-power-manager &
 
 rm -rf /tmp/bandwidth-upload
