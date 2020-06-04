@@ -1,13 +1,10 @@
-"/home/fperson/bin/greenclip print | sed '/^$/d' | dmenu -i -l 10 -p clipboard | xargs -r -d'\n' -I '{}' greenclip print '{}'"
-   control+shift + c
+# Show clipboard manager
+"greenclip print | sed '/^$/d' | dmenu -i -l 10 -p clipboard | xargs -r -d'\n' -I '{}' greenclip print '{}'"
+   Mod4 + c
 
+# Show keybindings
 "xbindkeys_show"
    control+shift + q
-
-# Show clipboard manager
-"/home/fperson/bin/greenclip print | sed '/^$/d' | dmenu -i -l 10 -p clipboard | xargs -r -d'\n' -I '{}' greenclip print '{}'"
-    m:0xc + c:64
-    Control+Alt + Alt_L
 
 # Toggle volume mute
 "amixer sset Master toggle; pkill -RTMIN+10 blocks"
@@ -20,3 +17,7 @@
 # Lower volume
 "amixer sset Master 5%-; pkill -RTMIN+10 blocks"
   XF86AudioLowerVolume
+
+# Take a screenshot
+"screenshot"
+  Print
