@@ -1,0 +1,10 @@
+font:
+  size: 7
+
+key_bindings:
+  - { key: V, mods: Alt, action: Paste }
+  - { key: C, mods: Alt, action: Copy }
+  - { key: U, mods: Control|Alt, action: ScrollPageUp }
+  - { key: D, mods: Control|Alt, action: ScrollPageDown }
+  - { key: K, mods: Control|Alt, action: ScrollLineUp }
+  - { key: J, mods: Control|Alt, action: ScrollLineDown }
