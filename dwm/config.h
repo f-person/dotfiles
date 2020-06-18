@@ -35,8 +35,9 @@ static const Rule rules[] = {
 	{ "Alacritty",NULL,       NULL,             0,            0,           1,         0,        -1 },
 	{  NULL,      NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
 	{  NULL,      NULL,    "Picture in picture",0,            1,           -1,        0,        -1 },
-	{  NULL,      NULL,    "Buddy List",        1 << 8,       0,           -1,        0,        -1 },
-	{ "Tilda",    NULL,       NULL,             0,            1,           -1,        0,        -1 },
+	{  NULL,      NULL,    "Buddy List",        1 << 8,       0,           -1,        1,        -1 },
+	{ "Pidgin",   NULL,       NULL,             0,            0,           -1,        1,        -1 },
+	{ "Tilda",    NULL,       NULL,             0,            1,           1,        1,        -1 },
 };
 
 /* layout(s) */
