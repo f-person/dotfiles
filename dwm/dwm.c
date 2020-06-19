@@ -1521,7 +1521,17 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
-	running = 0;
+	unsigned int n;
+	Window *junk = malloc(1);
+
+	XQueryTree(dpy, root, junk, junk, &junk, &n);
+
+	if (n == EMPTY_WINDOW_COUNT)
+		running = 0;
+	else
+		printf("[dwm] not exiting (n=%d)\n", n);
+
+	free(junk);
 }
 
 Monitor *
