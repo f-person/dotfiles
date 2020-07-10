@@ -8,6 +8,7 @@ slack &
 tilda &
 xbindkeys &
 xfce4-power-manager &
+redshift &
 
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download
