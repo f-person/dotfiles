@@ -21,3 +21,7 @@
 # Take a screenshot
 "/home/fperson/bin/screenshot"
   Print
+
+# Show emoji picker
+"rofimoji"
+  Mod4 + e
