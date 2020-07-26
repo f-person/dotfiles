@@ -3,7 +3,8 @@
 cd
 
 /home/fperson/bin/greenclip daemon &
-pidgin &
+dino &
+telegram-desktop &
 slack &
 tilda &
 xbindkeys &
