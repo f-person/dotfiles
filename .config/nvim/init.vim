@@ -9,17 +9,33 @@ Plug 'thosakwe/vim-flutter'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/goyo.vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
 Plug 'ryanoasis/vim-devicons'
 Plug 'lervag/vimtex'
 Plug 'luochen1990/rainbow'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'andrejlevkovitch/vim-lua-format'
+Plug 'justinmk/vim-sneak'
+Plug 'elixir-editors/vim-elixir'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-endwise'
 
-Plug 'morhetz/gruvbox'
+Plug '/home/fperson/workspace/personal_projects/nvim-sort-dart-imports'
+Plug '/home/fperson/workspace/personal_projects/pubspec-assist-nvim'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'dart'}
+Plug 'neovim/nvim-lsp'
+Plug 'nvim-lua/diagnostic-nvim'
+Plug 'haorenW1025/completion-nvim'
+
+Plug 'gruvbox-community/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
@@ -28,8 +44,8 @@ syntax on
 color gruvbox
 set background=dark
 let g:gruvbox_contrast_dark="hard"
-
 let g:rainbow_active = 1
+set colorcolumn=80
 
 set shell=fish
 syntax on
@@ -44,6 +60,7 @@ set number relativenumber
 set splitbelow splitright
 set encoding=utf-8
 set clipboard+=unnamedplus
+set updatetime=50
 
 " codestats config
 let g:codestats_api_key = ''
@@ -78,35 +95,78 @@ nnoremap <C-l> <C-w>
 nnoremap <PageUp> <Nop>
 nnoremap <PageDown> <Nop>
 
-nmap <C-x> :CocList gfiles<CR>
-nmap ca :CocCommand actions.open<CR>
-nmap gd :call CocActionAsync('jumpDefinition')<CR>
-nmap <leader>gr <Plug>(coc-references)
+" o/O
+" Start insert mode with [count] blank lines.
+" The default behavior repeats the insertion [count]
+" times, which is not so useful.
+function! s:NewLineInsertExpr( isUndoCount, command )
+    if ! v:count
+        return a:command
+    endif
 
-" coc.nvim config
-" if hidden is not set, TextEdit might fail.
-set hidden
-" Better display for messages
-set cmdheight=2
-" Smaller updatetime for CursorHold & CursorHoldI
-set updatetime=300
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~ '\s'
+    let l:reverse = { 'o': 'O', 'O' : 'o' }
+    " First insert a temporary '$' marker at the next line (which is necessary
+    " to keep the indent from the current line), then insert <count> empty lines
+    " in between. Finally, go back to the previously inserted temporary '$' and
+    " enter insert mode by substituting this character.
+    " Note: <C-\><C-n> prevents a move back into insert mode when triggered via
+    " |i_CTRL-O|.
+    return (a:isUndoCount && v:count ? "\<C-\>\<C-n>" : '') .
+    \   a:command . "$\<Esc>m`" .
+    \   v:count . l:reverse[a:command] . "\<Esc>" .
+    \   'g``"_s'
+endfunction
+nnoremap <silent> <expr> o <SID>NewLineInsertExpr(1, 'o')
+nnoremap <silent> <expr> O <SID>NewLineInsertExpr(1, 'O')
+
+nmap <leader>rg :Rg<CR>
+nmap <C-p> :GFiles<CR>
+nnoremap <Leader>pf :Files<CR>
+
+function! SetCocConfigs()
+  nmap ca :CocCommand actions.open<CR>
+  nmap gd :call CocActionAsync('jumpDefinition')<CR>
+  nmap <leader>gr <Plug>(coc-references)
+  nmap <leader>rr <Plug>(coc-rename)
+  nmap cd :CocList diagnostics<CR>
+
+  " coc.nvim config
+  " if hidden is not set, TextEdit might fail.
+  set hidden
+  " Better display for messages
+  set cmdheight=2
+  " Smaller updatetime for CursorHold & CursorHoldI
+  set updatetime=300
+  "don't give |ins-completion-menu| messages.
+  set shortmess+=c
+  " always show signcolumns
+  set signcolumn=yes
+  " use <tab> for trigger completion and navigate to the next complete item
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+
+  " use <c-space>for trigger completion
+  inoremap <silent><expr> <c-space> coc#refresh()
+
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
 endfunction
 
-inoremap <silent><expr> <TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<TAB>" :
-			\ coc#refresh()
+function SortDartImports()
+	if &filetype == 'dart'
+		:DartSortImports
+	endif
+endfunction
 
 " autoformat
-autocmd FileType [dart, javascript] au BufWrite * :call CocActionAsync('format')<CR>
+autocmd FileType dart au BufWrite * call CocActionAsync('format')
+autocmd FileType dart au BufWrite * call SortDartImports()
+autocmd FileType lua au BufWrite *lua call LuaFormat()
+"autocmd FileType javascript au BufWrite * :CocCommand prettier.formatFile
 
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
@@ -121,13 +181,19 @@ let g:go_highlight_function_parameters = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
-let g:jedi#completions_enabled = 0
-let g:go_def_mode = 'godef'
 
-" dart config
+let g:go_fmt_command = "golines"
+let g:go_fmt_options = {
+    \ 'golines': '-m 80 --base-formatter gofmtrlx',
+    \ }
+
 autocmd FileType dart set expandtab
 autocmd FileType dart set tabstop=2
 autocmd FileType dart set shiftwidth=2
+
+autocmd FileType json set expandtab
+autocmd FileType json set tabstop=2
+autocmd FileType json set shiftwidth=2
 
 if ! has('gui_running')
 	set ttimeoutlen=10
@@ -142,3 +208,29 @@ endif
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1
 
+autocmd BufEnter,BufNew *.love set filetype=lua
+autocmd BufEnter,BufNew *.dart call SetCocConfigs()
+
+nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+let g:completion_matching_ignore_case = 1
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ completion#trigger_completion()
+
+luafile ~/.config/nvim/init.lua

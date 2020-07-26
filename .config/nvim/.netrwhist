@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/fperson/projects/flutter/easy_list'
-let g:netrw_dirhist_2='/home/fperson/projects/flutter/easy_list/lib'
-let g:netrw_dirhist_3='/home/fperson/projects/flutter/easy_list/lib/widgets'
-let g:netrw_dirhist_4='/home/fperson/projects/flutter/easy_list/lib/widgets/products'
-let g:netrw_dirhist_5='/home/fperson/.config/opera/Extensions/ljipkdpcjbmhkdjjmbbaggebcednbbme/0.1.3_0'
-let g:netrw_dirhist_6='/home/fperson/Desktop'

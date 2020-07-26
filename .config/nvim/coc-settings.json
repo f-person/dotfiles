@@ -1,32 +1,23 @@
 {
-  "languageserver": {
-    "dart": {
-      "command": "dart_language_server", // in windows is dart_language_server.bat
-      "args": [],
-      "filetypes": ["dart"],
-      "initializationOptions": {},
-      "settings": {
-        "dart": {
-          "validation": {},
-          "completion": {}
-        }
-      }
-    },
-   "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"]
-    },
-   "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "initializationOptions": {
-         "cache": {
-           "directory": "/tmp/ccls"
-         }
-       }
-    }
-  },
-  "tsserver.npm": "/home/fperson/dev/node-v12.11.0-linux-x64/bin/npm"
+	"ccls": {
+		"command": "ccls",
+		"filetypes": ["c", "cpp", "objc", "objcpp"],
+		"rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+		"initializationOptions": {
+			"cache": {
+				"directory": "/tmp/ccls"
+			}
+		}
+	},
+	"tsserver.npm": "/home/fperson/.config/nvm/12.16.3/bin/npm",
+	"git.addGBlameToVirtualText": true,
+	"coc.preferences.formatOnSaveFiletypes": [ "dart" ],
+	"go.goplsOptions": {
+		"analyses": {
+			"composite": false,
+			"composites": false
+		},
+    "completeUnimported": true
+	},
+	"suggest.noselect": true
 }
