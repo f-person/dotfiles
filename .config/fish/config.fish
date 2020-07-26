@@ -3,7 +3,7 @@
 export ANDROID_SDK_ROOT=/home/fperson/dev/Android/Sdk
 export ANDROID_HOME=$ANDROID_SDK_ROOT
 
-set -U fish_user_paths /home/fperson/dev/flutter/bin $ANDROID_HOME/platform-tool $ANDROID_HOME/tools $ANDROID_HOME/tools/bin /home/fperson/bin /home/fperson/go/bin /home/fperson/.config/nvm/12.16.3/bin /home/fperson/dev/flutter/.pub-cache/bin /home/fperson/.luarocks/bin
+set -U fish_user_paths /home/fperson/dev/flutter/bin $ANDROID_HOME/platform-tool $ANDROID_HOME/tools $ANDROID_HOME/tools/bin /home/fperson/bin /home/fperson/go/bin /home/fperson/.config/nvm/12.16.3/bin /home/fperson/dev/flutter/.pub-cache/bin /home/fperson/.luarocks/bin /home/fperson/.pulumi/bin
 
 alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
