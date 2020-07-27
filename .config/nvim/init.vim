@@ -10,7 +10,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/goyo.vim'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
@@ -33,7 +33,7 @@ Plug '/home/fperson/workspace/personal_projects/pubspec-assist-nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'dart'}
 Plug 'neovim/nvim-lsp'
 Plug 'nvim-lua/diagnostic-nvim'
-Plug 'haorenW1025/completion-nvim'
+Plug 'nvim-lua/completion-nvim'
 
 Plug 'gruvbox-community/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -63,7 +63,7 @@ set clipboard+=unnamedplus
 set updatetime=50
 
 " codestats config
-let g:codestats_api_key = ''
+source ./codestats_api_key.vim
 let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
 
 nnoremap <leader>fa :FlutterRun<cr>
@@ -181,6 +181,7 @@ let g:go_highlight_function_parameters = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
+let g:go_gpls_enabled = 0
 
 let g:go_fmt_command = "golines"
 let g:go_fmt_options = {
@@ -210,10 +211,6 @@ let g:webdevicons_enable_nerdtree = 1
 
 autocmd BufEnter,BufNew *.love set filetype=lua
 autocmd BufEnter,BufNew *.dart call SetCocConfigs()
-
-nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
