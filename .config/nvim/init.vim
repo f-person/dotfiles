@@ -5,12 +5,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://gitlab.com/code-stats/code-stats-vim.git'
 Plug 'vim-airline/vim-airline'
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/goyo.vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go'
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
@@ -21,19 +20,30 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'andrejlevkovitch/vim-lua-format'
 Plug 'justinmk/vim-sneak'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'leafgarland/typescript-vim'
+Plug 'habamax/vim-godot'
+
+" Lua
+Plug 'andrejlevkovitch/vim-lua-format'
+Plug 'euclidianAce/BetterLua.vim'
+Plug 'tjdevries/nlua.nvim'
 
 Plug '/home/fperson/workspace/personal_projects/nvim-sort-dart-imports'
 Plug '/home/fperson/workspace/personal_projects/pubspec-assist-nvim'
+"Plug '/home/fperson/workspace/personal_projects/git-blame.nvim'
+Plug '/home/fperson/workspace/personal_projects/whid'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'dart'}
 Plug 'neovim/nvim-lsp'
 Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/completion-nvim'
+Plug 'RishabhRD/popfix'
+Plug 'RishabhRD/nvim-lsputils'
 
 Plug 'gruvbox-community/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -63,7 +73,7 @@ set clipboard+=unnamedplus
 set updatetime=50
 
 " codestats config
-source ./codestats_api_key.vim
+source ~/.config/nvim/codestats_api_key.vim
 let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
 
 nnoremap <leader>fa :FlutterRun<cr>
@@ -129,6 +139,7 @@ function! SetCocConfigs()
   nmap <leader>gr <Plug>(coc-references)
   nmap <leader>rr <Plug>(coc-rename)
   nmap cd :CocList diagnostics<CR>
+  nmap K :call CocActionAsync('doHover')<CR>
 
   " coc.nvim config
   " if hidden is not set, TextEdit might fail.
@@ -156,17 +167,18 @@ function! SetCocConfigs()
         \ coc#refresh()
 endfunction
 
-function SortDartImports()
-	if &filetype == 'dart'
-		:DartSortImports
-	endif
+function GDScriptFormat()
+	silent !gdformat %:p
+	:e
 endfunction
 
 " autoformat
-autocmd FileType dart au BufWrite * call CocActionAsync('format')
-autocmd FileType dart au BufWrite * call SortDartImports()
+au BufWrite *.dart :DartFmt
+autocmd! FileType dart au BufWrite *dart call :DartSortImports
 autocmd FileType lua au BufWrite *lua call LuaFormat()
-"autocmd FileType javascript au BufWrite * :CocCommand prettier.formatFile
+autocmd FileType javascript au BufWrite * :PrettierAsync
+autocmd FileType typescript au BufWrite * :PrettierAsync
+autocmd FileType gdscript au BufWritePost *gd call GDScriptFormat()
 
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
@@ -181,7 +193,7 @@ let g:go_highlight_function_parameters = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
-let g:go_gpls_enabled = 0
+let g:go_gopls_options=['-remote=auto']
 
 let g:go_fmt_command = "golines"
 let g:go_fmt_options = {
@@ -196,6 +208,8 @@ autocmd FileType json set expandtab
 autocmd FileType json set tabstop=2
 autocmd FileType json set shiftwidth=2
 
+autocmd FileType lua set expandtab
+
 if ! has('gui_running')
 	set ttimeoutlen=10
 	augroup FastEscape
@@ -209,7 +223,6 @@ endif
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1
 
-autocmd BufEnter,BufNew *.love set filetype=lua
 autocmd BufEnter,BufNew *.dart call SetCocConfigs()
 
 " Set completeopt to have a better completion experience
@@ -225,9 +238,34 @@ function! s:check_back_space() abort
 	return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
+inoremap <silent><expr> <c-space> completion#trigger_completion()
+
 inoremap <silent><expr> <TAB>
 			\ pumvisible() ? "\<C-n>" :
 			\ <SID>check_back_space() ? "\<TAB>" :
 			\ completion#trigger_completion()
 
 luafile ~/.config/nvim/init.lua
+
+ " Make Ripgrep ONLY search file contents and not filenames
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
+  \   <bang>0)
+
+set omnifunc=v:lua.vim.lsp.omnifunc
+
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+augroup END
+
+let g:tex_flavor = 'latex'
+
+autocmd FileType lua let g:completion_confirm_key = "\<C-Y>"
+
+autocmd FileType markdown nmap j gj
+autocmd FileType markdown nmap k gk
+

@@ -1,15 +1,11 @@
 local lsp = require('nvim_lsp')
 
 local on_attach = function(_, bufnr)
-    -- vim.api.nvim_command(
-    -- 'autocmd CursorHold <buffer> lua vim.lsp.util.show_line_diagnostics()')
-
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
     require'diagnostic'.on_attach()
+
     require'completion'.on_attach({
-        sorter = 'alphabet',
-        matcher = {'exact', 'fuzzy'}
+        sorter = 'none',
+        matcher = {'substring', 'exact', 'fuzzy'}
     })
 
     -- Mappings.
@@ -36,32 +32,62 @@ local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e',
                                 '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>',
                                 opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>h',
+                                '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 lsp.gopls.setup {
     on_attach = on_attach,
+    capabilities = capabilities,
     init_options = {analyses = {composite = false, composites = false}},
     settings = {gopls = {usePlaceholders = true, completeUnimported = true}}
 }
 
-lsp.tsserver.setup {}
+lsp.tsserver.setup {on_attach = on_attach}
 
-lsp.sumneko_lua.setup {
-    cmd = {"/usr/bin/lua-language-server"},
-    on_attach = on_attach,
-    settings = {
-        Lua = {
-            completion = {keywordSnippet = "Disable"},
-            runtime = {version = "LuaJIT"},
-            diagnostics = {
-                enable = true,
-                globals = {
-                    "vim", "Color", "c", "Group", "g", "s", "describe", "it",
-                    "before_each", "after_each"
-                }
-            }
-        }
-    }
-}
+require('nlua.lsp.nvim').setup(require('nvim_lsp'),
+                               {on_attach = on_attach, globals = {"love"}})
 
-lsp.jsonls.setup {}
+lsp.jsonls.setup {on_attach = on_attach}
+
+-- lsp.dartls.setup {
+-- cmd = {
+-- 'dart',
+-- '/home/fperson/dev/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot',
+-- '--lsp'
+-- },
+-- on_attach = on_attach,
+-- settings = {
+-- dart = {
+-- allowAnalytics = false,
+-- checkForSdkUpdates = false,
+-- showTodos = true
+-- }
+-- }
+-- }
+
+require'nvim_lsp'.pyls.setup {on_attach = on_attach}
+
+require'nvim_lsp'.vimls.setup {on_attach = on_attach}
+
+require'nvim_lsp'.gdscript.setup {on_attach = on_attach}
+
+vim.lsp.callbacks['textDocument/codeAction'] =
+    require'lsputil.codeAction'.code_action_handler
+vim.lsp.callbacks['textDocument/references'] =
+    require'lsputil.locations'.references_handler
+vim.lsp.callbacks['textDocument/definition'] =
+    require'lsputil.locations'.definition_handler
+vim.lsp.callbacks['textDocument/declaration'] =
+    require'lsputil.locations'.declaration_handler
+vim.lsp.callbacks['textDocument/typeDefinition'] =
+    require'lsputil.locations'.typeDefinition_handler
+vim.lsp.callbacks['textDocument/implementation'] =
+    require'lsputil.locations'.implementation_handler
+vim.lsp.callbacks['textDocument/documentSymbol'] =
+    require'lsputil.symbols'.document_handler
+vim.lsp.callbacks['workspace/symbol'] =
+    require'lsputil.symbols'.workspace_handler
