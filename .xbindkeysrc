@@ -25,3 +25,7 @@
 # Show emoji picker
 "rofimoji"
   Mod4 + e
+
+# Switch keyboard layout
+"switch-keyboard-layout"
+  control+space

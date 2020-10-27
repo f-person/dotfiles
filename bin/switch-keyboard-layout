@@ -1,0 +1,8 @@
+#!/bin/sh
+
+current_layout=`setxkbmap -query | grep layout | sed 's/^.*\(us.*\).*$/\1/'`
+if [ "$current_layout" = "us, ru" ]; then
+	setxkbmap "us, am(phonetic-alt)" -option "grp:win_space_toggle,grp_led:scroll"
+else
+	setxkbmap "us, ru" -option "grp:win_space_toggle,grp_led:scroll"
+fi
