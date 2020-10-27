@@ -3,13 +3,15 @@
 cd
 
 /home/fperson/bin/greenclip daemon &
-dino &
+#dino &
 telegram-desktop &
-slack &
+riot-desktop-nightly &
+#slack &
 tilda &
 xbindkeys &
 xfce4-power-manager &
 redshift &
+break_notifier.py &
 
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download
