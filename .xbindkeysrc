@@ -29,3 +29,7 @@
 # Switch keyboard layout
 "switch-keyboard-layout"
   control+space
+
+# Disable Control+Q for Firefox
+"/home/fperson/bin/noctrlq.sh"
+  control+q
