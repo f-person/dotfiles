@@ -172,13 +172,15 @@ function GDScriptFormat()
 	:e
 endfunction
 
+autocmd FileType gdscript :command! -buffer GDScriptFormat call GDScriptFormat()
+
 " autoformat
 au BufWrite *.dart :DartFmt
 autocmd! FileType dart au BufWrite *dart call :DartSortImports
 autocmd FileType lua au BufWrite *lua call LuaFormat()
 autocmd FileType javascript au BufWrite * :PrettierAsync
 autocmd FileType typescript au BufWrite * :PrettierAsync
-autocmd FileType gdscript au BufWritePost *gd call GDScriptFormat()
+"autocmd FileType gdscript au BufWritePost *gd call GDScriptFormat()
 
 autocmd FileType python map <leader>b<leader> :w !python3 %:p <CR>
 autocmd FileType dart   map <leader>b<leader> :w !dart    %:p <CR>
