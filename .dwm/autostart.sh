@@ -12,6 +12,8 @@ xbindkeys &
 xfce4-power-manager &
 redshift &
 break_notifier.py &
+setbg /home/fperson/.config/wall.jpg &
+picom &
 
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download

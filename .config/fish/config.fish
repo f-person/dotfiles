@@ -19,6 +19,7 @@ abbr targz 'tar xvzf'
 abbr fl flutter
 abbr protonrun 'STEAM_COMPAT_DATA_PATH=~/.proton ~/.steam/steam/steamapps/common/Proton\ 5.0/proton run'
 abbr kill 'kill -9'
+abbr pkill 'pkill -9'
 
 abbr gitst 'git status'
 abbr gitaa 'git add .'

@@ -154,17 +154,17 @@ function! SetCocConfigs()
   set signcolumn=yes
   " use <tab> for trigger completion and navigate to the next complete item
   function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
 
   " use <c-space>for trigger completion
   inoremap <silent><expr> <c-space> coc#refresh()
 
   inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<TAB>" :
+		\ coc#refresh()
 endfunction
 
 function GDScriptFormat()
@@ -175,8 +175,12 @@ endfunction
 autocmd FileType gdscript :command! -buffer GDScriptFormat call GDScriptFormat()
 
 " autoformat
-au BufWrite *.dart :DartFmt
-autocmd! FileType dart au BufWrite *dart call :DartSortImports
+"au BufWrite *.dart :DartFmt
+augroup sortDartImports
+	autocmd!
+	autocmd BufWrite *.dart :DartSortImports
+augroup END
+
 autocmd FileType lua au BufWrite *lua call LuaFormat()
 autocmd FileType javascript au BufWrite * :PrettierAsync
 autocmd FileType typescript au BufWrite * :PrettierAsync
