@@ -19,5 +19,6 @@
 		},
     "completeUnimported": true
 	},
-	"suggest.noselect": true
+	"suggest.noselect": true,
+  "flutter.trace.server": "verbose"
 }

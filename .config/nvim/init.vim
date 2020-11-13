@@ -35,12 +35,12 @@ Plug 'tjdevries/nlua.nvim'
 
 Plug '/home/fperson/workspace/personal_projects/nvim-sort-dart-imports'
 Plug '/home/fperson/workspace/personal_projects/pubspec-assist-nvim'
-"Plug '/home/fperson/workspace/personal_projects/git-blame.nvim'
+Plug '/home/fperson/workspace/personal_projects/git-blame.nvim'
 Plug '/home/fperson/workspace/personal_projects/whid'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'dart'}
 Plug 'neovim/nvim-lsp'
-Plug 'nvim-lua/diagnostic-nvim'
+"Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/completion-nvim'
 Plug 'RishabhRD/popfix'
 Plug 'RishabhRD/nvim-lsputils'
@@ -54,6 +54,7 @@ syntax on
 color gruvbox
 set background=dark
 let g:gruvbox_contrast_dark="hard"
+let g:gruvbox_contrast_light="hard"
 let g:rainbow_active = 1
 set colorcolumn=80
 
@@ -94,6 +95,8 @@ imap <c-s> <Esc>:w<CR>a
 nmap <m-`> :tabNext<CR>
 imap <m-`> <Esc> :tabNext<CR>i
 tnoremap <m-`> <C-\><C-n> :tabNext<CR>
+
+nnoremap <leader>p :GitGutterPreviewHunk<cr>
 
 " Ctrl + 2hjkl to navigate between splits
 nnoremap <C-h> <C-w>
@@ -274,4 +277,3 @@ autocmd FileType lua let g:completion_confirm_key = "\<C-Y>"
 
 autocmd FileType markdown nmap j gj
 autocmd FileType markdown nmap k gk
-

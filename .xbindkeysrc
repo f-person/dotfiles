@@ -2,10 +2,6 @@
 "rofi -modi 'clipboard:/home/fperson/bin/greenclip print' -show clipboard -run-command '{cmd}'"
    Mod4 + c
 
-# Show keybindings
-"xbindkeys_show"
-   control+shift + q
-
 # Toggle volume mute
 "amixer sset Master toggle; pkill -RTMIN+10 blocks"
   XF86AudioMute

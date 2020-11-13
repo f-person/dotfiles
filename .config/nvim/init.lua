@@ -1,7 +1,7 @@
 local lsp = require('nvim_lsp')
 
 local on_attach = function(_, bufnr)
-    require'diagnostic'.on_attach()
+    -- require'diagnostic'.on_attach()
 
     require'completion'.on_attach({
         sorter = 'none',
@@ -30,7 +30,7 @@ local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
                                 '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e',
-                                '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>',
+                                '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
                                 opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>h',
                                 '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
@@ -48,8 +48,11 @@ lsp.gopls.setup {
 
 lsp.tsserver.setup {on_attach = on_attach}
 
-require('nlua.lsp.nvim').setup(require('nvim_lsp'),
-                               {on_attach = on_attach, globals = {"love"}})
+require'nlua.lsp.nvim'.setup(require 'nvim_lsp', {
+    on_attach = on_attach,
+    globals = {'love'},
+    disabled_diagnostics = {'lowercase-global'}
+})
 
 lsp.jsonls.setup {on_attach = on_attach}
 
@@ -75,6 +78,8 @@ require'nvim_lsp'.vimls.setup {on_attach = on_attach}
 
 require'nvim_lsp'.gdscript.setup {on_attach = on_attach}
 
+require'nvim_lsp'.kotlin_language_server.setup {on_attach = on_attach}
+
 vim.lsp.callbacks['textDocument/codeAction'] =
     require'lsputil.codeAction'.code_action_handler
 vim.lsp.callbacks['textDocument/references'] =
@@ -91,3 +96,7 @@ vim.lsp.callbacks['textDocument/documentSymbol'] =
     require'lsputil.symbols'.document_handler
 vim.lsp.callbacks['workspace/symbol'] =
     require'lsputil.symbols'.workspace_handler
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                 {virtual_text = false, signs = true, update_in_insert = false})
