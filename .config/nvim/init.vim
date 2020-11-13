@@ -15,10 +15,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
 Plug 'ryanoasis/vim-devicons'
 Plug 'lervag/vimtex'
-Plug 'luochen1990/rainbow'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'justinmk/vim-sneak'
 Plug 'elixir-editors/vim-elixir'
@@ -36,27 +33,40 @@ Plug 'tjdevries/nlua.nvim'
 Plug '/home/fperson/workspace/personal_projects/nvim-sort-dart-imports'
 Plug '/home/fperson/workspace/personal_projects/pubspec-assist-nvim'
 Plug '/home/fperson/workspace/personal_projects/git-blame.nvim'
-Plug '/home/fperson/workspace/personal_projects/whid'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'dart'}
 Plug 'neovim/nvim-lsp'
-"Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/completion-nvim'
 Plug 'RishabhRD/popfix'
 Plug 'RishabhRD/nvim-lsputils'
 
+Plug 'luochen1990/rainbow'
 Plug 'gruvbox-community/gruvbox'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'kyazdani42/nvim-web-devicons'
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 
 syntax on
-color gruvbox
+colorscheme gruvbox
 set background=dark
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_contrast_light="hard"
 let g:rainbow_active = 1
 set colorcolumn=80
+
+highlight link luaOperator Special
+hi! link LspDiagnosticsDefaultError GruvboxRed
+hi! link LspDiagnosticsSignError GruvboxRedSign
+hi! link LspDiagnosticsDefaultWarning GruvboxYellow
+hi! link LspDiagnosticsSignWarning GruvboxYellowSign
+hi! link LspDiagnosticsDefaultInformation GruvboxBlue
+hi! link LspDiagnosticsSignInformation GruvboxBlueSign
+hi! link LspDiagnosticsDefaultHint GruvboxAqua
+hi! link LspDiagnosticsSignHint GruvboxAquaSign
 
 set shell=fish
 syntax on
@@ -96,7 +106,7 @@ nmap <m-`> :tabNext<CR>
 imap <m-`> <Esc> :tabNext<CR>i
 tnoremap <m-`> <C-\><C-n> :tabNext<CR>
 
-nnoremap <leader>p :GitGutterPreviewHunk<cr>
+nnoremap <leader>ph :GitGutterPreviewHunk<cr>
 
 " Ctrl + 2hjkl to navigate between splits
 nnoremap <C-h> <C-w>
@@ -131,10 +141,6 @@ function! s:NewLineInsertExpr( isUndoCount, command )
 endfunction
 nnoremap <silent> <expr> o <SID>NewLineInsertExpr(1, 'o')
 nnoremap <silent> <expr> O <SID>NewLineInsertExpr(1, 'O')
-
-nmap <leader>rg :Rg<CR>
-nmap <C-p> :GFiles<CR>
-nnoremap <Leader>pf :Files<CR>
 
 function! SetCocConfigs()
   nmap ca :CocCommand actions.open<CR>
@@ -255,14 +261,6 @@ inoremap <silent><expr> <TAB>
 			\ completion#trigger_completion()
 
 luafile ~/.config/nvim/init.lua
-
- " Make Ripgrep ONLY search file contents and not filenames
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
-  \   <bang>0)
 
 set omnifunc=v:lua.vim.lsp.omnifunc
 

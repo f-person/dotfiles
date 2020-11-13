@@ -8,7 +8,7 @@ local on_attach = function(_, bufnr)
         matcher = {'substring', 'exact', 'fuzzy'}
     })
 
-    -- Mappings.
+    -- Mappings
     local opts = {noremap = true, silent = true}
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD',
                                 '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -27,13 +27,28 @@ local on_attach = function(_, bufnr)
                                 opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rr',
                                 '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
-                                '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e',
                                 '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
                                 opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>h',
                                 '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
+    -- Telescope mappings
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
+                                "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({}))<CR>",
+                                opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rg',
+                                "<cmd>lua require'telescope.builtin'.live_grep()<CR>",
+                                opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-p>',
+                                "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({}))<CR>",
+                                opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>pf',
+                                "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({}))<CR>",
+                                opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ws',
+                                "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols(require('telescope.themes').get_dropdown({}))<CR>",
+                                opts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
