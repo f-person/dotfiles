@@ -61,7 +61,7 @@ bat(){
 
 wifi(){
 	ssid=`iwgetid -r`
-	strength=`nmcli -t -f SSID,SIGNAL device wifi | grep $ssid: | cut -f2- -d:`
+	strength=`nmcli -t -f SSID,SIGNAL device wifi | grep $ssid: 2>&1 | head -n 1 | cut -f2- -d:`
 
 	if [ -z "$ssid" ]
     then
@@ -74,6 +74,6 @@ wifi(){
 #colors: #B11F38 #E77A3D #EBD524 #4AA77A #685B87 #A24C57
 while true
 do
-    xsetroot -name "^c#B11F38^$(bat)^d^|^c#E77A3D^$(cpu)^d^|^c#EBD524^$(mem)^d^|^c#4AA77A^$(wifi)^d^|^c#685B87^$(band)^d^|^c#A24C57^$(dte)"
-    sleep 1s
+	xsetroot -name "^c#B11F38^$(bat)^d^|^c#E77A3D^$(cpu)^d^|^c#EBD524^$(mem)^d^|^c#4AA77A^$(wifi)^d^|^c#685B87^$(band)^d^|^c#A24C57^$(dte)"
+	sleep 1s
 done
