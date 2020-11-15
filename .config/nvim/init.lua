@@ -1,4 +1,4 @@
-local lsp = require('nvim_lsp')
+local lsp = require('lspconfig')
 
 local on_attach = function(_, bufnr)
     -- require'diagnostic'.on_attach()
@@ -63,7 +63,7 @@ lsp.gopls.setup {
 
 lsp.tsserver.setup {on_attach = on_attach}
 
-require'nlua.lsp.nvim'.setup(require 'nvim_lsp', {
+require'nlua.lsp.nvim'.setup(require 'lspconfig', {
     on_attach = on_attach,
     globals = {'love'},
     disabled_diagnostics = {'lowercase-global'}
@@ -87,13 +87,13 @@ lsp.jsonls.setup {on_attach = on_attach}
 -- }
 -- }
 
-require'nvim_lsp'.pyls.setup {on_attach = on_attach}
+require'lspconfig'.pyls.setup {on_attach = on_attach}
 
-require'nvim_lsp'.vimls.setup {on_attach = on_attach}
+require'lspconfig'.vimls.setup {on_attach = on_attach}
 
-require'nvim_lsp'.gdscript.setup {on_attach = on_attach}
+require'lspconfig'.gdscript.setup {on_attach = on_attach}
 
-require'nvim_lsp'.kotlin_language_server.setup {on_attach = on_attach}
+require'lspconfig'.kotlin_language_server.setup {on_attach = on_attach}
 
 vim.lsp.callbacks['textDocument/codeAction'] =
     require'lsputil.codeAction'.code_action_handler
