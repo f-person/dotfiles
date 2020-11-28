@@ -14,6 +14,10 @@
 "amixer sset Master 5%-; pkill -RTMIN+10 blocks"
   XF86AudioLowerVolume
 
+# Toggle microphone
+"amixer set Capture toggle"
+  XF86AudioMicMute
+
 # Take a screenshot
 "/home/fperson/bin/screenshot"
   Print
