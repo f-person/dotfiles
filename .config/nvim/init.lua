@@ -1,5 +1,7 @@
 local lsp = require('lspconfig')
 
+local keymap_opts = {noremap = true, silent = true}
+
 local on_attach = function(_, bufnr)
     -- require'diagnostic'.on_attach()
 
@@ -9,46 +11,34 @@ local on_attach = function(_, bufnr)
     })
 
     -- Mappings
-    local opts = {noremap = true, silent = true}
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD',
-                                '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+                                '<Cmd>lua vim.lsp.buf.declaration()<CR>',
+                                keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',
-                                '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+                                '<Cmd>lua vim.lsp.buf.definition()<CR>',
+                                keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',
-                                '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+                                '<Cmd>lua vim.lsp.buf.hover()<CR>', keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi',
                                 '<cmd>lua vim.lsp.buf.implementation()<CR>',
-                                opts)
+                                keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>',
                                 '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-                                opts)
+                                keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D',
                                 '<cmd>lua vim.lsp.buf.type_definition()<CR>',
-                                opts)
+                                keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rr',
-                                '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+                                '<cmd>lua vim.lsp.buf.rename()<CR>', keymap_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e',
                                 '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
-                                opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>h',
-                                '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-
-    -- Telescope mappings
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
-                                "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({}))<CR>",
-                                opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rg',
-                                "<cmd>lua require'telescope.builtin'.live_grep()<CR>",
-                                opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-p>',
-                                "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({}))<CR>",
-                                opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>pf',
-                                "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({}))<CR>",
-                                opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ws',
-                                "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols(require('telescope.themes').get_dropdown({}))<CR>",
-                                opts)
+                                keymap_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca',
+                                '<cmd>lua vim.lsp.buf.code_action()<CR>',
+                                keymap_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>cd',
+                                '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
+                                keymap_opts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -63,11 +53,13 @@ lsp.gopls.setup {
 
 lsp.tsserver.setup {on_attach = on_attach}
 
-require'nlua.lsp.nvim'.setup(require 'lspconfig', {
+require'nlua.lsp.nvim'.setup(lsp, {
     on_attach = on_attach,
     globals = {'love'},
     disabled_diagnostics = {'lowercase-global'}
 })
+
+-- lsp.sumneko_lua.setup {on_attach = on_attach}
 
 lsp.jsonls.setup {on_attach = on_attach}
 
@@ -115,3 +107,20 @@ vim.lsp.callbacks['workspace/symbol'] =
 vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
                  {virtual_text = false, signs = true, update_in_insert = false})
+
+-- Telescope mappings
+vim.api.nvim_set_keymap('n', 'gr',
+                        "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({}))<CR>",
+                        keymap_opts)
+vim.api.nvim_set_keymap('n', '<leader>rg',
+                        "<cmd>lua require'telescope.builtin'.live_grep()<CR>",
+                        keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-p>',
+                        "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({}))<CR>",
+                        keymap_opts)
+vim.api.nvim_set_keymap('n', '<leader>pf',
+                        "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({}))<CR>",
+                        keymap_opts)
+vim.api.nvim_set_keymap('n', '<leader>ws',
+                        "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols(require('telescope.themes').get_dropdown({}))<CR>",
+                        keymap_opts)
