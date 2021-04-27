@@ -5,7 +5,7 @@ cd
 /home/fperson/bin/greenclip daemon &
 #dino &
 telegram-desktop &
-riot-desktop-nightly &
+#riot-desktop-nightly &
 #slack &
 tilda &
 xbindkeys &
@@ -14,6 +14,7 @@ redshift &
 break_notifier.py &
 setbg /home/fperson/.config/wall.jpg &
 picom &
+/usr/lib64/xfce4/notifyd/xfce4-notifyd &
 
 rm -rf /tmp/bandwidth-upload
 rm -rf /tmp/bandwidth-download

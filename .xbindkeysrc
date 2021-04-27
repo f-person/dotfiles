@@ -18,12 +18,28 @@
 "amixer set Capture toggle"
   XF86AudioMicMute
 
+# Toggle play/pause
+"playerctl play-pause"
+  XF86AudioPause
+
+# Toggle play/pause
+"playerctl play-pause"
+  XF86AudioPlay
+
+# Play next track
+"playerctl next"
+  XF86AudioNext
+
+# Play previous track
+"playerctl previous"
+  XF86AudioPrev
+
 # Take a screenshot
 "/home/fperson/bin/screenshot"
   Print
 
 # Show emoji picker
-"rofimoji"
+"rofimoji -c"
   Mod4 + e
 
 # Switch keyboard layout
@@ -33,3 +49,11 @@
 # Disable Control+Q for Firefox
 "/home/fperson/bin/noctrlq.sh"
   control+q
+
+# Open web-browser
+"firefox"
+  Mod4 + w
+
+# Open a private window in web-browser
+"firefox --private-window"
+  Mod4 + shift + w

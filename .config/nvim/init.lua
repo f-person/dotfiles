@@ -3,8 +3,6 @@ local lsp = require('lspconfig')
 local keymap_opts = {noremap = true, silent = true}
 
 local on_attach = function(_, bufnr)
-    -- require'diagnostic'.on_attach()
-
     require'completion'.on_attach({
         sorter = 'none',
         matcher = {'substring', 'exact', 'fuzzy'}
@@ -39,12 +37,17 @@ local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>cd',
                                 '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
                                 keymap_opts)
+
+    -- LSP-based omnifunc.
+    vim.cmd('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 lsp.gopls.setup {
+    cmd = {'gopls'},
+    filetypes = {'go', 'gomod'},
     on_attach = on_attach,
     capabilities = capabilities,
     init_options = {analyses = {composite = false, composites = false}},
@@ -63,6 +66,19 @@ require'nlua.lsp.nvim'.setup(lsp, {
 
 lsp.jsonls.setup {on_attach = on_attach}
 
+-- local dart_capabilities = vim.lsp.protocol.make_client_capabilities()
+-- dart_capabilities.textDocument.codeAction =
+-- {
+-- codeActionLiteralSupport = {
+-- codeActionKind = {
+-- valueSet = {
+-- "", "quickfix", "refactor", "refactor.extract",
+-- "refactor.inline", "refactor.rewrite", "source",
+-- "source.organizeImports"
+-- }
+-- }
+-- }
+-- }
 -- lsp.dartls.setup {
 -- cmd = {
 -- 'dart',
@@ -74,7 +90,8 @@ lsp.jsonls.setup {on_attach = on_attach}
 -- dart = {
 -- allowAnalytics = false,
 -- checkForSdkUpdates = false,
--- showTodos = true
+-- showTodos = true,
+-- suggestFromUnimportedLibraries = true
 -- }
 -- }
 -- }
@@ -87,21 +104,21 @@ require'lspconfig'.gdscript.setup {on_attach = on_attach}
 
 require'lspconfig'.kotlin_language_server.setup {on_attach = on_attach}
 
-vim.lsp.callbacks['textDocument/codeAction'] =
+vim.lsp.handlers['textDocument/codeAction'] =
     require'lsputil.codeAction'.code_action_handler
-vim.lsp.callbacks['textDocument/references'] =
+vim.lsp.handlers['textDocument/references'] =
     require'lsputil.locations'.references_handler
-vim.lsp.callbacks['textDocument/definition'] =
+vim.lsp.handlers['textDocument/definition'] =
     require'lsputil.locations'.definition_handler
-vim.lsp.callbacks['textDocument/declaration'] =
+vim.lsp.handlers['textDocument/declaration'] =
     require'lsputil.locations'.declaration_handler
-vim.lsp.callbacks['textDocument/typeDefinition'] =
+vim.lsp.handlers['textDocument/typeDefinition'] =
     require'lsputil.locations'.typeDefinition_handler
-vim.lsp.callbacks['textDocument/implementation'] =
+vim.lsp.handlers['textDocument/implementation'] =
     require'lsputil.locations'.implementation_handler
-vim.lsp.callbacks['textDocument/documentSymbol'] =
+vim.lsp.handlers['textDocument/documentSymbol'] =
     require'lsputil.symbols'.document_handler
-vim.lsp.callbacks['workspace/symbol'] =
+vim.lsp.handlers['workspace/symbol'] =
     require'lsputil.symbols'.workspace_handler
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] =
@@ -124,3 +141,8 @@ vim.api.nvim_set_keymap('n', '<leader>pf',
 vim.api.nvim_set_keymap('n', '<leader>ws',
                         "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols(require('telescope.themes').get_dropdown({}))<CR>",
                         keymap_opts)
+
+require'formatter'.setup({
+    logging = false,
+    filetype = {dart = {function() return {exe = "dartfmt", stdin = true} end}}
+})

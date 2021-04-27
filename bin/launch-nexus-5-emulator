@@ -1,0 +1,3 @@
+#!/bin/sh
+
+$HOME/dev/flutter/bin/flutter emulators --launch Nexus_5_API_R

@@ -1,24 +1,3 @@
 {
-	"ccls": {
-		"command": "ccls",
-		"filetypes": ["c", "cpp", "objc", "objcpp"],
-		"rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-		"initializationOptions": {
-			"cache": {
-				"directory": "/tmp/ccls"
-			}
-		}
-	},
-	"tsserver.npm": "/home/fperson/.config/nvm/12.16.3/bin/npm",
-	"git.addGBlameToVirtualText": true,
-	"coc.preferences.formatOnSaveFiletypes": [ "dart" ],
-	"go.goplsOptions": {
-		"analyses": {
-			"composite": false,
-			"composites": false
-		},
-    "completeUnimported": true
-	},
-	"suggest.noselect": true,
-  "flutter.trace.server": "verbose"
+	"suggest.noselect": true
 }

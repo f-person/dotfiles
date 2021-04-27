@@ -5,8 +5,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://gitlab.com/code-stats/code-stats-vim.git'
 Plug 'vim-airline/vim-airline'
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/goyo.vim'
 Plug 'fatih/vim-go'
@@ -35,7 +35,7 @@ Plug '/home/fperson/workspace/personal_projects/pubspec-assist-nvim'
 Plug '/home/fperson/workspace/personal_projects/git-blame.nvim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'dart'}
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'RishabhRD/popfix'
 Plug 'RishabhRD/nvim-lsputils'
@@ -47,6 +47,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'mhartington/formatter.nvim'
 
 call plug#end()
 
@@ -82,6 +83,7 @@ set splitbelow splitright
 set encoding=utf-8
 set clipboard+=unnamedplus
 set updatetime=50
+set hidden
 
 " codestats config
 source ~/.config/nvim/codestats_api_key.vim
@@ -142,23 +144,25 @@ endfunction
 nnoremap <silent> <expr> o <SID>NewLineInsertExpr(1, 'o')
 nnoremap <silent> <expr> O <SID>NewLineInsertExpr(1, 'O')
 
+let g:didSetCocConfigs = 0
 function! SetCocConfigs()
-  nmap ca :CocCommand actions.open<CR>
+  if g:didSetCocConfigs == 1
+	return
+  endif
+
+  let g:didSetCocConfigs = 1
+
+  nmap <leader>ca v<Plug>(coc-codeaction-selected)
   nmap gd :call CocActionAsync('jumpDefinition')<CR>
   nmap <leader>gr <Plug>(coc-references)
   nmap <leader>rr <Plug>(coc-rename)
   nmap cd :CocList diagnostics<CR>
   nmap K :call CocActionAsync('doHover')<CR>
 
-  " coc.nvim config
-  " if hidden is not set, TextEdit might fail.
-  set hidden
   " Better display for messages
   set cmdheight=2
   " Smaller updatetime for CursorHold & CursorHoldI
   set updatetime=300
-  "don't give |ins-completion-menu| messages.
-  set shortmess+=c
   " always show signcolumns
   set signcolumn=yes
   " use <tab> for trigger completion and navigate to the next complete item
@@ -187,6 +191,8 @@ autocmd FileType gdscript :command! -buffer GDScriptFormat call GDScriptFormat()
 "au BufWrite *.dart :DartFmt
 augroup sortDartImports
 	autocmd!
+    "autocmd BufWrite *.dart :FormatWrite
+	autocmd BufWrite *.dart :DartFmt
 	autocmd BufWrite *.dart :DartSortImports
 augroup END
 
@@ -223,6 +229,10 @@ autocmd FileType json set expandtab
 autocmd FileType json set tabstop=2
 autocmd FileType json set shiftwidth=2
 
+autocmd FileType yaml set expandtab
+autocmd FileType yaml set tabstop=2
+autocmd FileType yaml set shiftwidth=2
+
 autocmd FileType lua set expandtab
 
 if ! has('gui_running')
@@ -240,11 +250,18 @@ let g:webdevicons_enable_nerdtree = 1
 
 autocmd BufEnter,BufNew *.dart call SetCocConfigs()
 
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
+
+" Manual completion trigger
+imap <silent> <c-f> <Plug>(completion_trigger)
 
 let g:completion_matching_ignore_case = 1
 
@@ -252,17 +269,6 @@ function! s:check_back_space() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
-
-inoremap <silent><expr> <c-space> completion#trigger_completion()
-
-inoremap <silent><expr> <TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<TAB>" :
-			\ completion#trigger_completion()
-
-luafile ~/.config/nvim/init.lua
-
-set omnifunc=v:lua.vim.lsp.omnifunc
 
 augroup highlight_yank
     autocmd!
@@ -275,3 +281,7 @@ autocmd FileType lua let g:completion_confirm_key = "\<C-Y>"
 
 autocmd FileType markdown nmap j gj
 autocmd FileType markdown nmap k gk
+
+let g:gitblame_date_format = '%r'
+
+luafile ~/.config/nvim/init.lua
